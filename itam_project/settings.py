@@ -127,5 +127,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 #MPTT module settings
 #Identation for mptt in the admin interface
 MPTT_ADMIN_LEVEL_INDENT = 20
-
+#redirect after login
 LOGIN_REDIRECT_URL = '/'
