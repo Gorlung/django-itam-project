@@ -1,7 +1,7 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 class Category(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
@@ -79,7 +79,7 @@ class Change(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, editable=False, related_name='assets')
     changed_on = models.DateTimeField(editable=False, default=timezone.now())
     change_details = models.TextField(editable=False)
-    author = models.ForeignKey('auth.User', editable=False)
+    author = models.ForeignKey('auth.User', on_delete=models.SET('USER DELETED'), editable=False, null=True)
     class Meta:
         verbose_name = 'Change'
         verbose_name_plural = 'Changes'
