@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class='jumbotron'>
+            <div class ='container'>
+                <h1>Assets List</h1>
+                    <div class="centerstage">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                    <th>Inventory Number</th>
+                                    <th>Added On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for asset in asset_list %}
+                                    <tr>
+                                        <td><h1><a href="{% url 'asset_detail' pk=asset.pk %}">{{ asset.inventory_number }}</a></h1></td>
+                                        <td>{{ asset.added_on|date:"D M Y H:i:s"}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                </table>
+                       
+                </div>
+                {% if is_paginated %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;&laquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&laquo;&laquo;</span></li>
+                    {% endif %}
+                    {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;&raquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&raquo;&raquo;</span></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>
