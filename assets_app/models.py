@@ -57,8 +57,8 @@ class Asset(models.Model):
     state = models.ForeignKey(State, on_delete=models.SET('NOT SET'), blank=False, null=True)
     aquisition_date = models.DateField(null=True)
     warranty_expiry_date = models.DateField(blank=True, null=True)
-    added_on = models.DateTimeField(editable=False, default=timezone.now())
-    modified_on = models.DateTimeField(editable=False, default=timezone.now())
+    added_on = models.DateTimeField(editable=False, default=timezone.now)
+    modified_on = models.DateTimeField(editable=False, default=timezone.now)
     legal_entity = models.CharField(max_length=100, blank=True)
     invoice_number = models.CharField(max_length=50, blank=True)
     host_name = models.CharField(max_length=100, blank=True)
@@ -77,7 +77,7 @@ class Asset(models.Model):
 
 class Change(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, editable=False, related_name='assets')
-    changed_on = models.DateTimeField(editable=False, default=timezone.now())
+    changed_on = models.DateTimeField(editable=False, default=timezone.now)
     change_details = models.TextField(editable=False)
     author = models.ForeignKey('auth.User', on_delete=models.SET('USER DELETED'), editable=False, null=True)
     class Meta:

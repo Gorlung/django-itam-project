@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
        <div class='jumbotron'> 
@@ -22,6 +22,12 @@
             {{ asset.invoice_number }}<br>
             {{ asset.host_name  }}<br>
             {{ asset.comments  }}<br>
+            <a class='btn btn-primary' href='{% url "asset_edit" pk=asset.pk %}'>
+                <span class='glyphicon glyphicon-plus'>Edit</span>
+            </a>
+            <a class='btn btn-primary' href='{% url "asset_delete" pk=asset.pk %}'>
+                <span class='glyphicon glyphicon-plus'>Delete</span>
+            </a>
         </div>
      </div>
     </body>
