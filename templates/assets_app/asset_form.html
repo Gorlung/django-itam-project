@@ -1,9 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
-        <h1>Asset Form/h1>
+    <div class='jumbotron'>
+        <div class='container'>
+            <h1>Asset Form</h1>
+            <form class='post-form' method='POST'>
+                {% csrf_token %}
+                <table>
+                <tr>
+                <td>Inventory Number:</td>
+                <td>{{form.inventory_number}}</td>
+                </tr>
+                <tr>
+                <td>Model Name:</td>
+                <td>{{form.model_name}}</td>
+                </tr>
+                <td>Category:</td>
+                <td>{{form.category}}</td>
+                </tr>
+                </table>
+                {{form.as_p}}
+                <div class='glyphicon glyphicon-plus'>
+                    <button type='submit' class='btn btn-primary'>Save</button>
+
+                    <button type='button' class='btn btn-primary' onClick="window.history.back();return false;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>            
     </body>
 </html>

@@ -35,7 +35,7 @@ class CreateAssetView(CreateView,LoginRequiredMixin):
     model = Asset
 
 class AssetUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/login/'
+    login_url = '/accounts/login/'
     redirect_field_name = 'assets_app/asset_detail.html'
     form_class = AssetForm
     model = Asset

@@ -129,3 +129,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MPTT_ADMIN_LEVEL_INDENT = 20
 #redirect after login
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

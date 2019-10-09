@@ -11,8 +11,9 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                    <th>Inventory Number</th>
-                                    <th>Added On</th>
+                                        <th>Inventory Number</th>
+                                        <th>Added On</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -20,11 +21,18 @@
                                     <tr>
                                         <td><h1><a href="{% url 'asset_detail' pk=asset.pk %}">{{ asset.inventory_number }}</a></h1></td>
                                         <td>{{ asset.added_on|date:"D M Y H:i:s"}}</td>
+                                        <td>
+                                            <a class='btn btn-primary' href='{% url "asset_edit" pk=asset.pk %}'>
+                                                <span class='glyphicon glyphicon-plus'>Edit</span>
+                                            </a>
+                                            <a class='btn btn-primary' href='{% url "asset_delete" pk=asset.pk %}'>
+                                                <span class='glyphicon glyphicon-plus'>Delete</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                                 </table>
-                       
                 </div>
                 {% if is_paginated %}
                 <ul class="pagination">

@@ -5,7 +5,7 @@ class AssetForm(forms.ModelForm):
 
     class Meta():
         model = Asset
-        fields = ('inventory_number', 'category', 'location', 'serial_number', 'vendor', 'state', 'aquisition_date', 'warranty_expiry_date', 'legal_entity', 'invoice_number', 'host_name', 'comments')
+        fields = ('inventory_number', 'category', 'location', 'serial_number', 'vendor', 'state', 'aquisition_date', 'warranty_expiry_date', 'legal_entity', 'invoice_number', 'host_name', 'comments', 'model_name')
         widgets = {
             'inventory_number':forms.TextInput(attrs={'class':'textinputclass'}),
             'category':forms.Select(),
