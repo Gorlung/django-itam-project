@@ -18,5 +18,5 @@ class AssetForm(forms.ModelForm):
             'legal_entity':forms.TextInput(attrs={'class':'textinputclass'}),
             'invoice_number':forms.TextInput(attrs={'class':'textinputclass'}),
             'host_name':forms.TextInput(attrs={'class':'textinputclass'}),
-            'comments':forms.Textarea(attrs={'class':'editable medium-editor-textarea postcontent'})
-        }
+            'comments':forms.Textarea(attrs={'class':'editable medium-editor-textarea postcontent'}),
+}

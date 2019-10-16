@@ -22,6 +22,15 @@
             {{ asset.invoice_number }}<br>
             {{ asset.host_name  }}<br>
             {{ asset.comments  }}<br>
+            Modified_on: {{ asset.modified_on  }}<br>
+            Added_on: {{ asset.added_on  }}<br>
+            Change: {{ change.asset_id }}<br>
+            <div class='container'>
+                <h2>Changes history:</h2>
+                {% for obj in change %}
+                    <li>{{ obj.change_details }}</li>
+                {% endfor %}
+            </div>
             <a class='btn btn-primary' href='{% url "asset_edit" pk=asset.pk %}'>
                 <span class='glyphicon glyphicon-plus'>Edit</span>
             </a>
