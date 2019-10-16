@@ -64,7 +64,7 @@ class Asset(models.Model):
     host_name = models.CharField(max_length=100, blank=True)
     comments = models.TextField(blank=True)
     def change(self):
-        self.modified_on = timezone.now()
+        self.modified_on = timezone.localtime(timezone.now())
         self.save()
     def get_absolute_url(self):
         return reverse('asset_detail', kwargs={'pk': self.pk})
