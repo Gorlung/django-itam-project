@@ -9,6 +9,4 @@ urlpatterns = [
     url(r'^assets/(?P<pk>\d+)/edit/$', views.AssetUpdateView.as_view(), name='asset_edit'),
     url(r'^assets/(?P<pk>\d+)/delete/$', views.AssetDeleteView.as_view(), name='asset_delete'),
     path('assets/new/', views.CreateAssetView.as_view(), name='asset_new'),
-    path('categories/', views.categories, name='categories'),
-    path('locations/', views.locations, name='locations'),
 ]
