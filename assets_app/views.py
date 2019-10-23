@@ -1,22 +1,24 @@
 from django.shortcuts import render
-from assets_app.models import Category, Location, Asset, Change
+from assets_app.models import Category, Location, Asset, Change, Employee
 from assets_app.forms import AssetForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-
+from django.contrib.auth import logout
 
 
 def index(request):
     return render(request, 'assets_app/index.html', context=None)
 
-
+def logout_view(request):
+    logout(request)
+    return render(request, 'assets_app/index.html', context=None)
 
 class AssetsListView(ListView):
     model = Asset
     paginate_by = 3
     def get_queryset(self):
-        return Asset.objects.all().order_by('-added_on')
+        return Asset.objects.filter(location__id__in=Employee.objects.filter(user=self.request.user.id).values('permitted_locations'))
 
 class AssetDetailView(DetailView):
     model = Asset

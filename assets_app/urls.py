@@ -4,6 +4,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('logout/', views.logout_view, name='logout'),
     path('assets/', views.AssetsListView.as_view(), name='assets_list'),
     url(r'^assets/(?P<pk>\d+)$', views.AssetDetailView.as_view(), name='asset_detail'),
     url(r'^assets/(?P<pk>\d+)/edit/$', views.AssetUpdateView.as_view(), name='asset_edit'),

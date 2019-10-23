@@ -34,13 +34,13 @@
 
             <div class='container'>
                 <h2>Changes history:</h2>
-                <ol>
-                    {% for obj in change reversed %}
-                        <li>
-                            <b>{{obj.author}}</b> did the following changes: <b>{{obj.change_details}}</b> on {{obj.changed_on}}
-                        </li>
-                    {% endfor %}
-                </ol>
+                    <ol>
+                        {% for obj in change reversed %}
+                            <li>
+                                <b>{{obj.author}}</b> did the following changes: <b>{{obj.change_details}}</b> on {{obj.changed_on}}
+                            </li>
+                        {% endfor %}
+                    </ol>
             </div>            
         </div>
      </div>

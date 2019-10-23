@@ -1,5 +1,5 @@
 from django import forms
-from assets_app.models import Asset, Change
+from assets_app.models import Asset
 
 class AssetForm(forms.ModelForm):
 
