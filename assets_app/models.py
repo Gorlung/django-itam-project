@@ -3,6 +3,10 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django.utils import timezone
 from django.urls import reverse
 
+from django.contrib.auth.models import User
+
+
+
 class Category(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
@@ -17,17 +21,11 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
-class Location(MPTTModel):
+class Location(models.Model):
     name = models.CharField(max_length=50)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    selectable_choices = (('Yes','Yes'),('No','No'))
-    selectable = models.CharField(max_length=3, choices=selectable_choices, default='No')
     class Meta:
         verbose_name = 'Location'
         verbose_name_plural = 'Locations'
-    class MPTTMeta:
-        level_attr = 'mptt_level'
-        order_insertion_by=['name']
     def __str__(self):
         return self.name
 
@@ -51,7 +49,7 @@ class Asset(models.Model):
     inventory_number = models.CharField(max_length=50, unique=True)
     model_name = models.CharField(max_length=50, unique=False, blank=False)
     category = TreeForeignKey('Category', on_delete=models.SET('UNCATEGORISED'), blank=False)
-    location = TreeForeignKey('Location', on_delete=models.SET('NOT SET'), blank=False, null=True)
+    location = models.ForeignKey('Location', on_delete=models.SET('NOT SET'), blank=False, null=True)
     serial_number = models.CharField(max_length=50, blank=False, null=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.SET('NOT SET'), blank=False, null=True)
     state = models.ForeignKey(State, on_delete=models.SET('NOT SET'), blank=False, null=True)
@@ -85,3 +83,8 @@ class Change(models.Model):
         verbose_name_plural = 'Changes'
     def __str__(self):
         return self.asset + ': ' + self.change_details
+
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    permitted_locations = models.ManyToManyField(Location)
+    
