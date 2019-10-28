@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from assets_app.models import Category, Location, Asset, Change, Employee
 from assets_app.forms import AssetForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
-
+from django.forms import formset_factory
+from django.forms import BaseFormSet
 
 def index(request):
     return render(request, 'assets_app/index.html', context=None)
@@ -43,6 +44,10 @@ class AssetDetailView(LoginRequiredMixin,SameLocationOnlyMixin, DetailView):
 class CreateAssetView(LoginRequiredMixin,CreateView):
     form_class = AssetForm
     model = Asset
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(CreateAssetView, self).get_form_kwargs(*args, **kwargs)
+        kwargs['user_id'] = self.request.user.id
+        return kwargs
 
 class AssetUpdateView(LoginRequiredMixin,SameLocationOnlyMixin,UpdateView):
     form_class = AssetForm

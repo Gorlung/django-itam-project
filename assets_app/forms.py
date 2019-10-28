@@ -1,5 +1,5 @@
 from django import forms
-from assets_app.models import Asset
+from assets_app.models import Asset,Employee,Location
 
 class AssetForm(forms.ModelForm):
 
@@ -19,4 +19,8 @@ class AssetForm(forms.ModelForm):
             'invoice_number':forms.TextInput(attrs={'class':'textinputclass'}),
             'host_name':forms.TextInput(attrs={'class':'textinputclass'}),
             'comments':forms.Textarea(attrs={'class':'editable medium-editor-textarea postcontent'}),
-}
+            }
+    def __init__(self, *args, **kwargs):
+        self.user_id = kwargs.pop('user_id')
+        super(AssetForm, self).__init__(*args, **kwargs)
+        self.fields['location'] = forms.ModelChoiceField(queryset=Location.objects.filter(id__in=Employee.objects.filter(user=self.user_id).values('permitted_locations')))
