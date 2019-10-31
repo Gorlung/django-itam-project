@@ -1,15 +1,14 @@
 from django import forms
-from assets_app.models import Asset,Employee,Location
+from assets_app.models import Asset,Employee,Location,Category
+from mptt.forms import TreeNodeChoiceField
 
 class AssetForm(forms.ModelForm):
 
     class Meta():
         model = Asset
-        fields = ('inventory_number', 'category', 'location', 'serial_number', 'vendor', 'state', 'aquisition_date', 'warranty_expiry_date', 'legal_entity', 'invoice_number', 'host_name', 'comments', 'model_name')
+        fields = ('inventory_number', 'location', 'serial_number', 'vendor', 'state', 'aquisition_date', 'warranty_expiry_date', 'legal_entity', 'invoice_number', 'host_name', 'comments', 'model_name')
         widgets = {
             'inventory_number':forms.TextInput(attrs={'class':'textinputclass'}),
-            'category':forms.Select(),
-            'location':forms.Select(),
             'serial_number':forms.TextInput(attrs={'class':'textinputclass'}),
             'vendor':forms.Select(),
             'state':forms.Select(),
@@ -24,3 +23,5 @@ class AssetForm(forms.ModelForm):
         self.user_id = kwargs.pop('user_id')
         super(AssetForm, self).__init__(*args, **kwargs)
         self.fields['location'] = forms.ModelChoiceField(queryset=Location.objects.filter(id__in=Employee.objects.filter(user=self.user_id).values('permitted_locations')))
+        #self.fields['category'] = TreeNodeChoiceField(queryset=Category.objects.all(), level_indicator=u'+--')
+        

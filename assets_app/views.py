@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 from django.forms import formset_factory
 from django.forms import BaseFormSet
 
+
 def index(request):
     return render(request, 'assets_app/index.html', context=None)
 
@@ -48,13 +49,26 @@ class CreateAssetView(LoginRequiredMixin,CreateView):
         kwargs = super(CreateAssetView, self).get_form_kwargs(*args, **kwargs)
         kwargs['user_id'] = self.request.user.id
         return kwargs
+    def form_valid(self, form):
+        form.instance.category_id = self.request.POST['category']
+        return super(CreateAssetView, self).form_valid(form)
 
 class AssetUpdateView(LoginRequiredMixin,SameLocationOnlyMixin,UpdateView):
     form_class = AssetForm
     model = Asset
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(AssetUpdateView, self).get_form_kwargs(*args, **kwargs)
+        kwargs['user_id'] = self.request.user.pk
+        return kwargs
+    def get_context_data(self, **kwargs):
+            context = super(AssetUpdateView, self).get_context_data(**kwargs)
+            asset = Asset.objects.get(id=self.kwargs.get('pk', 0))
+            context['initial_category'] = Category.objects.get(id=asset.category.pk)
+            return context
     def form_valid(self, form):
         asset_item = form.save(commit=False)
         changes = form.changed_data
+        form.instance.category_id = self.request.POST['category']
         if changes:
             changes_dict = ''
             for k in changes:
