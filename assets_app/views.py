@@ -5,8 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
-from django.forms import formset_factory
-from django.forms import BaseFormSet
+
 
 
 def index(request):
@@ -65,14 +64,19 @@ class AssetUpdateView(LoginRequiredMixin,SameLocationOnlyMixin,UpdateView):
             asset = Asset.objects.get(id=self.kwargs.get('pk', 0))
             context['initial_category'] = Category.objects.get(id=asset.category.pk)
             return context
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         asset_item = form.save(commit=False)
         changes = form.changed_data
-        form.instance.category_id = self.request.POST['category']
-        if changes:
+        asset = Asset.objects.get(id=self.kwargs.get('pk', 0))
+        initial_category = Category.objects.get(id=asset.category.pk)
+        changed_category = Category.objects.get(id=self.request.POST['category'])
+        if changes or initial_category.id != changed_category.id:
+            form.instance.category_id = self.request.POST['category']
             changes_dict = ''
             for k in changes:
                 changes_dict += ' '+ k +' to ' + str(form.cleaned_data.get(k)) + ';'
+            if initial_category.id != changed_category.id:
+                changes_dict += ' ' + str(initial_category.name) + ' to ' + str(changed_category.name) + ';'  
             change_item = Change(asset=asset_item, change_details=changes_dict, author=self.request.user)
             change_item.save()
             asset_item.save()
