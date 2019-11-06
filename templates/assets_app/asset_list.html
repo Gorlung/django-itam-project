@@ -1,61 +1,71 @@
-<!DOCTYPE html>
-<html>
-    <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class='jumbotron'>
-            <div class ='container'>
-                <h1>Assets List</h1>
-                    <div class="centerstage">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Inventory Number</th>
-                                        <th>Added On</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for asset in asset_list %}
-                                    <tr>
-                                        <td><h1><a href="{% url 'asset_detail' pk=asset.pk %}">{{ asset.inventory_number }}</a></h1></td>
-                                        <td>{{ asset.added_on|date:"D M Y H:i:s"}}</td>
-                                        <td>
-                                            <a class='btn btn-primary' href='{% url "asset_edit" pk=asset.pk %}'>
-                                                <span class='glyphicon glyphicon-plus'>Edit</span>
-                                            </a>
-                                            <a class='btn btn-primary' href='{% url "asset_delete" pk=asset.pk %}'>
-                                                <span class='glyphicon glyphicon-plus'>Delete</span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                                </table>
-                </div>
-                {% if is_paginated %}
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;&laquo;</a></li>
-                    {% else %}
-                    <li class="disabled"><span>&laquo;&laquo;</span></li>
-                    {% endif %}
-                    {% for i in paginator.page_range %}
-                    {% if page_obj.number == i %}
-                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                    {% else %}
-                        <li><a href="?page={{ i }}">{{ i }}</a></li>
-                    {% endif %}
-                    {% endfor %}
-                    {% if page_obj.has_next %}
-                    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;&raquo;</a></li>
-                    {% else %}
-                    <li class="disabled"><span>&raquo;&raquo;</span></li>
-                    {% endif %}
-                </ul>
+{% extends 'assets_app/base.html' %}
+
+{% block content %}
+
+    {% comment %} <div class="container text-center"> {% endcomment %}
+ 
+            <h1>Assets List</h1>
+                {% comment %} <div class="container"> {% endcomment %}
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=inventory_number{% else %}?page={{ page_obj.number }}&orderby=inventory_number{% endif %}">Inventory Number</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=serial_number{% else %}?page={{ page_obj.number }}&orderby=serial_number{% endif %}">Serial Number</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=category{% else %}?page={{ page_obj.number }}&orderby=category{% endif %}">Category</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=location{% else %}?page={{ page_obj.number }}&orderby=location{% endif %}">Location</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=vendor{% else %}?page={{ page_obj.number }}&orderby=vendor{% endif %}">Vendor</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=state{% else %}?page={{ page_obj.number }}&orderby=state{% endif %}">State</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=legal_entity{% else %}?page={{ page_obj.number }}&orderby=legal_entity{% endif %}">Legal Entity</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=host_name{% else %}?page={{ page_obj.number }}&orderby=host_name{% endif %}">Host Name</a></th>
+                                    <th><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.number }}&orderby=added_on{% else %}?page={{ page_obj.number }}&orderby=added_on{% endif %}">Added On</a></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for asset in asset_list %}
+                                <tr>
+                                    <td><a href="{% url 'asset_detail' pk=asset.pk %}">{{ asset.inventory_number }}</a></td>
+                                    <td>{{ asset.serial_number }}</td>
+                                    <td>{{ asset.category }}</td>
+                                    <td>{{ asset.location }}</td>
+                                    <td>{{ asset.vendor }}</td>
+                                    <td>{{ asset.state }}</td>
+                                    <td>{{ asset.legal_entity }}</td>
+                                    <td>{{ asset.host_name }}</td>
+                                    <td>{{ asset.added_on|date:"D M Y H:i:s"}}</td>
+                                    <td>
+                                        <a href='{% url "asset_edit" pk=asset.pk %}'>
+                                            <span class='glyphicon glyphicon-pencil'>Edit</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+            {% comment %} </div> {% endcomment %}
+            {% if is_paginated %}
+            <ul class="pagination pagination-sm">
+                {% if page_obj.has_previous %}
+                <li><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.previous_page_number }}{% else %}?page={{ page_obj.previous_page_number }}&orderby={{orderby}}{% endif %}">&laquo;&laquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&laquo;&laquo;</span></li>
                 {% endif %}
-            </div>
-        </div>
-    </body>
-</html>
+                {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="{% if orderby == 'inventory_number' %}?page={{ i }}{% else %}?page={{ i }}&orderby={{orderby}}{% endif %}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.next_page_number }}{% else %}?page={{ page_obj.next_page_number }}&orderby={{orderby}}{% endif %}">&raquo;&raquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&raquo;&raquo;</span></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+
+  {% comment %} </div> {% endcomment %}
+
+
+{% endblock %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+          <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static '/assets_app/default.css' %}">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12"> 
+                    <nav class="navbar navbar-inverse navbar-fixed-top">
+                
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="#">ITAM portal</a>
+                            </div>
+                            <ul class="nav navbar-nav">
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'logout' %}">
+                                            {% if user.is_authenticated %}
+                                                User: {{ user.get_username }}
+                                            {% else %}
+                                                <span class="caret">Please log in.</span>
+                                            {% endif %}
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                <li><a href="{% url 'logout' %}"><p>Logout</p></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">How-To Guide</a></li>
+
+                            </ul>
+                            </div>
+                
+                        
+                    </nav>
+                </div>    
+            </div>
+            <div class="jumbotron">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    
+                </div>
+            </div>
+
+               <div class="col-sm-12 col-md-12 col-lg-12">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+    
+
+        </div>
+    </body>
+</html>

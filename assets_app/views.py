@@ -5,11 +5,12 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 
 
 def index(request):
-    return render(request, 'assets_app/index.html', context=None)
+    return redirect('/assets/')
 
 def logout_view(request):
     logout(request)
@@ -28,9 +29,14 @@ class SameLocationOnlyMixin(object):
 
 class AssetsListView(LoginRequiredMixin,ListView):
     model = Asset
-    paginate_by = 2
+    paginate_by = 4
     def get_queryset(self):
-        return Asset.objects.filter(location__id__in=Employee.objects.filter(user=self.request.user.id).values('permitted_locations'))
+        order = self.request.GET.get('orderby','inventory_number')
+        return Asset.objects.filter(location__id__in=Employee.objects.filter(user=self.request.user.id).values('permitted_locations')).order_by(order)
+    def get_context_data(self, **kwargs):
+        context = super(AssetsListView, self).get_context_data(**kwargs)
+        context['orderby'] = self.request.GET.get('orderby','inventory_number')
+        return context
 
 class AssetDetailView(LoginRequiredMixin,SameLocationOnlyMixin, DetailView):
     model = Asset
