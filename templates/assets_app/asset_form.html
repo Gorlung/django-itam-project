@@ -1,18 +1,14 @@
-<!DOCTYPE html>
+{% extends 'assets_app/base.html' %}
+
+{% block content %}
+
+
 {% load mptt_tags %}
-<html>
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
-    <body>
-    
-    <div class='jumbotron'>
-        <div class='container'>
             <h1>Asset Form</h1>
             <form class='post-form' method='POST'>
                 {% csrf_token %}
                 <p>
-                    <select name="category" id="id_category" required>
+                    Category: <select name="category" id="id_category" required>
                         
                         {% full_tree_for_model assets_app.Category as category %}
                         <option value="{{initial_category.id}}">+--{{initial_category.name}}</option>
@@ -28,12 +24,10 @@
                 {{form.as_p}}
 
                 <div class='glyphicon glyphicon-plus'>
-                    <button type='submit' class='btn btn-primary'>Save</button>
+                    <button type='submit' class='btn btn-secondary'>Save</button>
 
-                    <button type='button' class='btn btn-primary' onClick="window.history.back();return false;">Cancel</button>
+                    <button type='button' class='btn btn-secondary' onClick="window.history.back();return false;">Cancel</button>
                 </div>
             </form>
-        </div>
-    </div>            
-    </body>
-</html>
+
+{% endblock %}

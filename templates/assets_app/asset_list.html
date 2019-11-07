@@ -50,23 +50,23 @@
                             </table>
  
             {% if is_paginated %}
-            <ul class="pagination pagination-sm">
+            <ul class="pagination">
                 {% if page_obj.has_previous %}
-                <li><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.previous_page_number }}{% else %}?page={{ page_obj.previous_page_number }}&orderby={{orderby}}{% endif %}">&laquo;&laquo;</a></li>
+                <li class="page-item"><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.previous_page_number }}{% else %}?page={{ page_obj.previous_page_number }}&orderby={{orderby}}{% endif %}" class="page-link">&laquo;&laquo;</a></li>
                 {% else %}
-                <li class="disabled"><span>&laquo;&laquo;</span></li>
+                <li class="page-item disabled"><span>&laquo;&laquo;</span></li>
                 {% endif %}
                 {% for i in paginator.page_range %}
                 {% if page_obj.number == i %}
-                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    <li class="page-item active" aria-current="page"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
                 {% else %}
-                    <li><a href="{% if orderby == 'inventory_number' %}?page={{ i }}{% else %}?page={{ i }}&orderby={{orderby}}{% endif %}">{{ i }}</a></li>
+                    <li class="page-item"><a href="{% if orderby == 'inventory_number' %}?page={{ i }}{% else %}?page={{ i }}&orderby={{orderby}}{% endif %}" class="page-link">{{ i }}</a></li>
                 {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                <li><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.next_page_number }}{% else %}?page={{ page_obj.next_page_number }}&orderby={{orderby}}{% endif %}">&raquo;&raquo;</a></li>
+                <li class="page-item"><a href="{% if orderby == 'inventory_number' %}?page={{ page_obj.next_page_number }}{% else %}?page={{ page_obj.next_page_number }}&orderby={{orderby}}{% endif %}" class="page-link">&raquo;&raquo;</a></li>
                 {% else %}
-                <li class="disabled"><span>&raquo;&raquo;</span></li>
+                <li class="page-item disabled"><span>&raquo;&raquo;</span></li>
                 {% endif %}
             </ul>
             {% endif %}
