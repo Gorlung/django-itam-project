@@ -29,7 +29,7 @@ class SameLocationOnlyMixin(object):
 
 class AssetsListView(LoginRequiredMixin,ListView):
     model = Asset
-    paginate_by = 4
+    paginate_by = 20
     def get_queryset(self):
         order = self.request.GET.get('orderby','inventory_number')
         return Asset.objects.filter(location__id__in=Employee.objects.filter(user=self.request.user.id).values('permitted_locations')).order_by(order)
