@@ -1,48 +1,106 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
-    <body>
-       <div class='jumbotron'> 
-        <div class='container'>
-            <h1>Asset Details</h1>
-            {{ asset.inventory_number }}<br>
-            {{ asset.model_name }}<br>
-            {{ asset.category }}<br>
-            {{ asset.location }}<br>
-            {{ asset.serial_number}}<br>
-            {{ asset.vendor}}<br>
-            {{ asset.state }}<br>
-            {{ asset.aquisition_date }}<br>
-            {{ asset.warranty_expiry_date }}<br>
-            {{ asset.added_on }}<br>
-            {{ asset.modified_on}}<br>
-            {{ asset.legal_entity }}<br>
-            {{ asset.invoice_number }}<br>
-            {{ asset.host_name  }}<br>
-            {{ asset.comments  }}<br>
-            Modified_on: {{ asset.modified_on  }}<br>
-            Added_on: {{ asset.added_on  }}<br>
+{% extends 'assets_app/base.html' %}
 
-            <a class='btn btn-primary' href='{% url "asset_edit" pk=asset.pk %}'>
-                <span class='glyphicon glyphicon-plus'>Edit</span>
-            </a>
-            <a class='btn btn-primary' href='{% url "asset_delete" pk=asset.pk %}'>
-                <span class='glyphicon glyphicon-plus'>Delete</span>
-            </a>
+{% block content %}
 
-            <div class='container'>
-                <h2>Changes history:</h2>
-                    <ol>
-                        {% for obj in change reversed %}
-                            <li>
-                                <b>{{obj.author}}</b> did the following changes: <b>{{obj.change_details}}</b> on {{obj.changed_on}}
-                            </li>
-                        {% endfor %}
-                    </ol>
-            </div>            
-        </div>
-     </div>
-    </body>
-</html>
+
+
+            
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                    <h1>Asset Details</h1>
+                        <table class="table table-striped table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th><i>Attribute</i></th>
+                                    <th><i>Value</i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><b>Inventory Number</b></td>
+                                <td>{{ asset.inventory_number }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Model Name</b></td>
+                                <td>{{ asset.model_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Category</b></td>
+                                <td>{{ asset.category }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Location</b></td>
+                                <td>{{ asset.location }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Serial Number</b></td>
+                                <td>{{ asset.serial_number}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Vendor</b></td>
+                                <td>{{ asset.vendor}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>State</b></td>
+                                <td>{{ asset.state }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Aquisition Date</b></td>
+                                <td>{{ asset.aquisition_date }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Warranty Expiry Date</b></td>
+                                <td>{{ asset.warranty_expiry_date }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Added On</b></td>
+                                <td>{{ asset.added_on }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Modified On</b></td>
+                                <td>{{ asset.modified_on}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Legal Entity</b></td>
+                                <td>{{ asset.legal_entity }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Invoice Number</b></td>
+                                <td>{{ asset.invoice_number }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Host Name</b></td>
+                                <td>{{ asset.host_name  }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Comments</b></td>
+                                <td>{{ asset.comments  }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a class='btn btn-secondary' href='{% url "asset_edit" pk=asset.pk %}'>
+                            <i class="fas fa-pen"></i><span class='glyphicon glyphicon-plus'> Edit</span>
+                        </a>
+
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                    <br><br><hr>
+                        <h2>Changes history:</h2>
+                            <ol>
+                                {% for obj in change reversed %}
+                                    <li>
+                                        <b>{{obj.author}}</b> did the following changes: <b>{{obj.change_details}}</b> on {{obj.changed_on}}
+                                    </li>
+                                {% endfor %}
+                            </ol>                    
+                    </div>
+                </div>
+            </div>
+
+
+       
+
+
+
+{% endblock %}
