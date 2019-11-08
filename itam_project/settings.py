@@ -125,6 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = '/static/'
 
 #MPTT module settings
 #Identation for mptt in the admin interface
@@ -135,3 +136,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 #crispy(bootstrap for forms)
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#grappelli related
+GRAPPELLI_ADMIN_TITLE = 'ITAM Admin Console'
