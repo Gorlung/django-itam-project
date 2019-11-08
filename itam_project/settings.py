@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'assets_app.apps.AssetsAppConfig',
-    'mptt'
+    'mptt',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,6 @@ MPTT_ADMIN_LEVEL_INDENT = 20
 #redirect after login
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+#crispy(bootstrap for forms)
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -12,8 +12,8 @@ class AssetForm(forms.ModelForm):
             'serial_number':forms.TextInput(attrs={'class':'textinputclass'}),
             'vendor':forms.Select(),
             'state':forms.Select(),
-            'aquisition_date':forms.SelectDateWidget(),
-            'warranty_expiry_date':forms.SelectDateWidget(),
+            'aquisition_date':forms.SelectDateWidget(years=range(2010, 2040)),
+            'warranty_expiry_date':forms.SelectDateWidget(years=range(2010, 2040)),
             'legal_entity':forms.TextInput(attrs={'class':'textinputclass'}),
             'invoice_number':forms.TextInput(attrs={'class':'textinputclass'}),
             'host_name':forms.TextInput(attrs={'class':'textinputclass'}),
@@ -23,5 +23,5 @@ class AssetForm(forms.ModelForm):
         self.user_id = kwargs.pop('user_id')
         super(AssetForm, self).__init__(*args, **kwargs)
         self.fields['location'] = forms.ModelChoiceField(queryset=Location.objects.filter(id__in=Employee.objects.filter(user=self.user_id).values('permitted_locations')))
-        #self.fields['category'] = TreeNodeChoiceField(queryset=Category.objects.all(), level_indicator=u'+--')
+    
         
