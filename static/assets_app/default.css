@@ -33,3 +33,16 @@ p {
 h1 {
     color: #333333;
 }
+
+div.form {
+    max-width:500px;
+    color: #333333;
+}
+
+label {
+    color: #333333;
+}
+
+.form-control {
+    color: #333333;
+}

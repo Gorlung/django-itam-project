@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
-    <body>
+{% extends 'assets_app/base.html' %}
+
+{% block content %}
         <div class='jumbotron'>
-            <div class ='container'>
+            <div class ='container' style='text-align:center;'>
                 <h1>You don't have permissions to view this content</h1>
+                <button type='button' class='btn btn-secondary' onClick="window.history.back();return false;"><i class="fas fa-arrow-alt-circle-left"></i><span>  Back to the previous page</span></button>
             </div>
         </div>
-    </body>
-</html>
+{% endblock %}

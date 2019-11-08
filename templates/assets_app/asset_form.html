@@ -4,11 +4,13 @@
 
 
 {% load mptt_tags %}
+{% load crispy_forms_tags %}
             <h1>Asset Form</h1>
+            <div class='form'>
             <form class='post-form' method='POST'>
                 {% csrf_token %}
                 <p>
-                    Category: <select name="category" id="id_category" required>
+                    Category*: <select class='form-control' name="category" id="id_category" required>
                         
                         {% full_tree_for_model assets_app.Category as category %}
                         <option value="{{initial_category.id}}">+--{{initial_category.name}}</option>
@@ -21,13 +23,14 @@
                             {% endfor %}
                     </select>
                 </p>
-                {{form.as_p}}
+                {{form|crispy}}
 
                 <div class='glyphicon glyphicon-plus'>
-                    <button type='submit' class='btn btn-secondary'>Save</button>
+                    <button type='submit' class='btn btn-secondary btn-success'>Save</button>
 
-                    <button type='button' class='btn btn-secondary btn-warning' onClick="window.history.back();return false;">Cancel</button>
+                    <button type='button' class='btn btn-secondary' onClick="window.history.back();return false;">Cancel</button>
                 </div>
             </form>
+            </div>
 
 {% endblock %}
