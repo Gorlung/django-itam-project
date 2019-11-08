@@ -25,3 +25,11 @@ a {
 p {
     color: #777; 
 }
+
+.table thead th {
+    color: #777; 
+}
+
+h1 {
+    color: #333333;
+}
